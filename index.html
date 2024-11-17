@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Software Development Skill Evaluator</title>
+    <style>
+    :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f39c12;
+        --background-color: #f4f7fa;
+        --text-color: #333;
+        --card-background: #ffffff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: var(--card-background);
+        border-radius: 12px;
+        box-shadow: 0 10px 20px var(--shadow-color);
+        padding: 2rem;
+        max-width: 800px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    h1, h2 {
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .landing-page {
+        text-align: center;
+    }
+
+    .landing-page p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+        background-color: #3a7bc8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px var(--shadow-color);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .topic-selection {
+        margin-top: 2rem;
+    }
+
+    .btn-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+        background-color: #e0e7ff;
+        color: var(--primary-color);
+    }
+
+    .btn-group .btn:hover {
+        background-color: #c7d2fe;
+    }
+
+    .question {
+        margin-bottom: 2rem;
+    }
+
+    .options {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .option {
+        background-color: #f0f4f8;
+        border: 2px solid #d0d9e6;
+        border-radius: 8px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .option:hover {
+        background-color: #e0e7ff;
+        border-color: var(--primary-color);
+    }
+
+    .option.selected {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e0e7ff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 2rem;
+    }
+
+    .progress {
+        width: 0;
+        height: 100%;
+        background-color: var(--primary-color);
+        transition: width 0.5s ease-in-out;
+    }
+
+    .result {
+        text-align: center;
+    }
+
+    .result h3 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+
+    .result p {
+        margin-bottom: 0.5rem;
+    }
+
+    .resource-links {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .resource-link {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .resource-link:hover {
+        background-color: #e67e22;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px var(--shadow-color);
+    }
+
+    .resource-link svg {
+        margin-right: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+        .container {
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .landing-page p {
+            font-size: 1rem;
+        }
+
+        .btn-group {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Landing Page -->
+        <div class="landing-page" id="landing-page">
+            <h1>Welcome to Skill Evaluator</h1>
+            <p>Discover your software development skills and receive tailored learning paths and certifications.</p>
+            <button class="btn" onclick="startEvaluation()">Get Started</button>
+        </div>
+
+        <!-- Evaluation Page -->
+        <div id="evaluation-page" class="hidden">
+            <h1>Advanced Software Development Skill Evaluator</h1>
+            <div id="content"></div>
+        </div>
+    </div>
+    <!-- <div class="container">
+        <h1>Advanced Software Development Skill Evaluator</h1>
+        <div id="content"></div>
+    </div> -->
+
+    <script>
+        const topics = [
+            'JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'Go',
+            'HTML/CSS', 'React', 'Node.js', 'SQL', 'Git', 'Docker'
+        ];
+
+
+        function startEvaluation() {
+            document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('evaluation-page').classList.remove('hidden');
+            renderTopicSelection();
+        }
+
+        const quizData = {
+            'JavaScript': [
+                {
+                    question: "What is the output of console.log(typeof NaN)?",
+                    options: ["'undefined'", "'number'", "'NaN'", "'object'"],
+                    correct: 1
+                },
+                {
+                    question: "Which method is used to serialize an object into a JSON string in Javascript?",
+                    options: ["JSON.stringify()", "JSON.parse()", "Object.toString()", "Object.toJSON()"],
+                    correct: 0
+                },
+                {
+                    question: "What does the 'use strict' directive do in JavaScript?",
+                    options: ["Enforces stricter parsing and error handling", "Allows the use of undeclared variables", "Disables all error checking", "Makes the code run faster"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'yield' keyword in JavaScript?",
+                    options: ["To pause and resume a generator function", "To declare a variable", "To return a value from a function", "To create an object"],
+                    correct: 0
+                },
+                {
+                    question: "Which of the following is not a valid way to declare a function in JavaScript?",
+                    options: ["function myFunc() {}", "const myFunc = function() {}", "const myFunc = () => {}", "function = myFunc() {}"],
+                    correct: 3
+                },
+                {
+                    question: "What is the output of console.log(1 + '2' + '2')?",
+                    options: ["'14'", "'122'", "5", "Error"],
+                    correct: 1
+                },
+                {
+                    question: "What is a closure in JavaScript?",
+                    options: ["A way to close a browser window", "A function with access to its outer scope", "A method to end a loop", "A type of error"],
+                    correct: 1
+                },
+                {
+                    question: "What does the 'this' keyword refer to in JavaScript?",
+                    options: ["The current function", "The global object", "The object that owns the executing code", "The parent object"],
+                    correct: 2
+                },
+                {
+                    question: "Which method is used to add one or more elements to the end of an array?",
+                    options: ["push()", "append()", "addToEnd()", "concat()"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'async' keyword in JavaScript?",
+                    options: ["To declare a variable as asynchronous", "To define an asynchronous function", "To create a new thread", "To pause code execution"],
+                    correct: 1
+                }
+            ],
+            'Python': [
+                {
+                    question: "What is the output of print(type(lambda x: x))?",
+                    options: ["'function'", "'lambda'", "'<class 'function'>'", "'<class 'lambda'>'"],
+                    correct: 2
+                },
+                {
+                    question: "Which of the following is not a core data type in Python?",
+                    options: ["Lists", "Dictionary", "Tuples", "Class"],
+                    correct: 3
+                },
+                {
+                    question: "What does the 'yield' keyword do in Python?",
+                    options: ["Pauses a function saving its states", "Terminates a function", "Restarts a function", "Yields control to the operating system"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'with' statement in Python?",
+                    options: ["Exception handling", "Looping", "Resource management", "Defining a new scope"],
+                    correct: 2
+                },
+                {
+                    question: "Which of the following is true about Python lists?",
+                    options: ["Lists are immutable", "Lists can contain elements of different types", "Lists have a fixed size", "Lists can only contain numbers"],
+                    correct: 1
+                },
+                {
+                    question: "What is a decorator in Python?",
+                    options: ["A type of loop", "A function that modifies another function", "A class attribute", "A type of variable"],
+                    correct: 1
+                },
+                {
+                    question: "What does the 'self' keyword represent in a Python class?",
+                    options: ["The class itself", "The instance of the class", "The parent class", "The main function"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is used to define a block in Python?",
+                    options: ["Curly braces {}", "Parentheses ()", "Indentation", "Square brackets []"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the '__init__' method in Python classes?",
+                    options: ["To initialize class attributes", "To create a new instance", "To delete an instance", "To return a string representation of the object"],
+                    correct: 0
+                },
+                {
+                    question: "What is the output of 'hello'[-1] in Python?",
+                    options: ["'h'", "'o'", "'hello'", "Error"],
+                    correct: 1
+                }
+            ],
+            'Java': [
+                {
+                    question: "Which of these keywords is used to define interfaces in Java?",
+                    options: ["intf", "Intf", "interface", "Interface"],
+                    correct: 2
+                },
+                {
+                    question: "Which of the following is not a feature of Java?",
+                    options: ["Dynamic", "Architecture Neutral", "Use of pointers", "Object-oriented"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'final' keyword in Java?",
+                    options: ["To create a constant", "To prevent inheritance", "To declare a variable", "All of the above"],
+                    correct: 3
+                },
+                {
+                    question: "Which collection class allows you to grow or shrink its size and provides indexed access to its elements?",
+                    options: ["LinkedList", "ArrayList", "HashMap", "Vector"],
+                    correct: 1
+                },
+                {
+                    question: "What is the difference between '==' and '.equals()' in Java?",
+                    options: ["They are exactly the same", "'==' compares references while .equals() compares contents", "'==' is used for primitives, .equals() for objects", "There is no .equals() method in Java"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'static' keyword in Java?",
+                    options: ["To create a constant", "To make a variable belong to the class rather than an instance", "To prevent inheritance", "To create a new instance"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is true about Java packages?",
+                    options: ["A package can contain only classes", "A package can contain only interfaces", "A package can contain both classes and interfaces", "A package can contain only abstract classes"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'super' keyword in Java?",
+                    options: ["To call the superclass constructor", "To access superclass methods", "To create a new instance", "Both A and B"],
+                    correct: 3
+                },
+                {
+                    question: "Which of the following is not a valid access modifier in Java?",
+                    options: ["public", "private", "protected", "friend"],
+                    correct: 3
+                },
+                {
+                    question: "What is the output of System.out.println(1 + 2 + \"3\" + 4 + 5);?",
+                    options: ["15", "3345", "12345", "33345"],
+                    correct: 1
+                }
+            ],
+            'C++': [
+                {
+                    question: "Which of the following type modifiers is supported in C++ but not in C?",
+                    options: ["signed", "unsigned", "long", "mutable"],
+                    correct: 3
+                },
+                {
+                    question: "What is the correct way to declare a pointer to an integer in C++?",
+                    options: ["int ptr*;", "int *ptr;", "int& ptr;", "pointer int ptr;"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'virtual' keyword in C++?",
+                    options: ["To create a virtual machine", "To define a virtual function", "To allocate memory dynamically", "To create an abstract class"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is used to explicitly call a constructor of a base class from a derived class in C++?",
+                    options: ["using", "base", "this", ":"],
+                    correct: 3
+                },
+                {
+                    question: "What is the difference between 'struct' and 'class' in C++?",
+                    options: ["There is no difference", "struct members are public by default, class members are private", "struct can't have member functions", "class can't be inherited"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'const' keyword in C++?",
+                    options: ["To declare a constant variable", "To define a constant function", "To create a constant pointer", "All of the above"],
+                    correct: 3
+                },
+                {
+                    question: "Which of the following is used for dynamic memory allocation in C++?",
+                    options: ["malloc()", "alloc()", "new", "create()"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'friend' keyword in C++?",
+                    options: ["To define a friendly function", "To allow a function to access private members of a class", "To create a new instance", "To inherit from a class"],
+                    correct: 1
+                },
+                {
+                    question: "What is the correct way to declare a reference variable in C++?",
+                    options: ["int &ref = var;", "ref int = var;", "int *ref = var;", "reference int = var;"],
+                    correct: 0
+                },
+                {
+                    question: "Which of the following is not a type of constructor in C++?",
+                    options: ["Default constructor", "Parameterized constructor", "Copy constructor", "Friend constructor"],
+                    correct: 3
+                }
+            ],
+            'Ruby': [
+                {
+                    question: "Which of the following is used to define a constant in Ruby?",
+                    options: ["const", "define", "constant", "All capital letters"],
+                    correct: 3
+                },
+                {
+                    question: "What does the '<<' operator do when used with strings in Ruby?",
+                    options: ["Shift left", "Append", "Prepend", "Concatenate"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'yield' keyword in Ruby?",
+                    options: ["To pause execution", "To call a block", "To raise an exception", "To return from a method"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is not a valid way to create a hash in Ruby?",
+                    options: ["hash = {}", "hash = Hash.new", "hash = Hash.create", "hash = Hash[]"],
+                    correct: 2
+                },
+                {
+                    question: "What is the difference between 'puts' and 'print' in Ruby?",
+                    options: ["puts adds a newline, print doesn't", "print adds a newline, puts doesn't", "puts is for strings, print is for numbers", "There is no difference"],
+                    correct: 0
+                },
+                {
+                    question: "What does the '==' operator compare in Ruby?",
+                    options: ["Object identity", "Object value", "Object type", "Object reference"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'super' keyword in Ruby?",
+                    options: ["To call a superclass method", "To create a new instance", "To define a class method", "To raise an exception"],
+                    correct: 0
+                },
+                {
+                    question: "Which of the following is true about Ruby modules?",
+                    options: ["They can be instantiated", "They can inherit from classes", "They can be mixed into classes", "They can have subclasses"],
+                    correct: 2
+                },
+                {
+                    question: "What is the output of puts [1, 2, 3].map { |n| n * 2 }?",
+                    options: ["[2, 4, 6]", "2\n4\n6\n", "2 4 6", "None of the above"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'attr_accessor' method in Ruby?",
+                    options: ["To define a class variable", "To create getter and setter methods", "To declare a constant", "To include a module"],
+                    correct: 1
+                }
+            ],
+            'Go': [
+                {
+                    question: "What is the correct way to declare a slice in Go?",
+                    options: ["var s []int", "var s array[]", "slice s []int", "s := slice[]int"],
+                    correct: 0
+                },
+                {
+                    question: "Which keyword is used to define a new structure type in Go?",
+                    options: ["struct", "type", "interface", "map"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'defer' keyword in Go?",
+                    options: ["To define a deferred function", "To create a new goroutine", "To handle errors", "To declare a variable"],
+                    correct: 0
+                },
+                {
+                    question: "Which of the following is used for error handling in Go?",
+                    options: ["try-catch blocks", "if err != nil", "throw statement", "error.New()"],
+                    correct: 1
+                },
+                {
+                    question: "What is a goroutine in Go?",
+                    options: ["A type of variable", "A lightweight thread managed by the Go runtime", "A built-in function", "A type of loop"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'make' function in Go?",
+                    options: ["To create a new variable", "To allocate and initialize slices, maps, and channels", "To define a new type", "To import a package"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is true about interfaces in Go?",
+                    options: ["They must be explicitly implemented", "They can contain fields", "They are implicitly implemented", "They can only contain one method"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'init' function in Go?",
+                    options: ["To initialize variables", "To start the main program", "To import packages", "To set up state before the main function is called"],
+                    correct: 3
+                },
+                {
+                    question: "What is the correct way to handle multiple return values in Go?",
+                    options: ["Using an array", "Using a slice", "Using multiple assignment", "Using a struct"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'blank identifier' (_) in Go?",
+                    options: ["To create an anonymous function", "To ignore a value", "To define a private variable", "To import a package for its side effects"],
+                    correct: 1
+                }
+            ],
+            'HTML/CSS': [
+                {
+                    question: "Which CSS property is used to change the text color of an element?",
+                    options: ["font-color", "text-color", "color", "font-style"],
+                    correct: 2
+                },
+                {
+                    question: "What does CSS stand for?",
+                    options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
+                    correct: 1
+                },
+                {
+                    question: "Which HTML tag is used to define an unordered list?",
+                    options: ["<ol>", "<list>", "<ul>", "<unordered>"],
+                    correct: 2
+                },
+                {
+                    question: "What is the correct HTML for creating a hyperlink?",
+                    options: ["<a url='http://www.example.com'>Example</a>", "<a href='http://www.example.com'>Example</a>", "<a>http://www.example.com</a>", "<a name='http://www.example.com'>Example</a>"],
+                    correct: 1
+                },
+                {
+                    question: "Which CSS property is used to control the spacing between elements?",
+                    options: ["spacing", "margin", "padding", "border"],
+                    correct: 1
+                },
+                {
+                    question: "What does the 'z-index' CSS property control?",
+                    options: ["Element width", "Element height", "Element position", "Element stacking order"],
+                    correct: 3
+                },
+                {
+                    question: "Which HTML5 tag is used to specify a footer for a document or section?",
+                    options: ["<bottom>", "<section>", "<footer>", "<foot>"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'alt' attribute in HTML image tags?",
+                    options: ["To define image dimensions", "To provide alternative text for the image", "To specify the image source", "To add a border to the image"],
+                    correct: 1
+                },
+                {
+                    question: "Which CSS property is used to make a flexible box layout?",
+                    options: ["flex", "flexbox", "box-flex", "display: flex"],
+                    correct: 3
+                },
+                {
+                    question: "What is the purpose of the HTML5 <canvas> element?",
+                    options: ["To display database records", "To create draggable elements", "To draw graphics via scripting", "To create input fields"],
+                    correct: 2
+                }
+            ],
+            'React': [
+                {
+                    question: "Which hook is used to perform side effects in a function component?",
+                    options: ["useEffect", "useState", "useContext", "useReducer"],
+                    correct: 0
+                },
+                {
+                    question: "What is the correct way to render a list in React?",
+                    options: ["Using a for loop", "Using .map()", "Using a while loop", "Using .forEach()"],
+                    correct: 1
+                },
+                {
+                    question: "What is JSX in React?",
+                    options: ["A JavaScript library", "A JavaScript extension for writing HTML-like code", "A state management tool", "A build tool"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the 'key' prop when rendering a list of elements?",
+                    options: ["To style the elements", "To provide a unique identifier for each element", "To sort the elements", "To filter the elements"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of React.Fragment?",
+                    options: ["To create a new component", "To group multiple elements without adding extra nodes to the DOM", "To optimize rendering", "To handle state updates"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the useCallback hook?",
+                    options: ["To memoize functions", "To create state variables", "To handle side effects", "To create refs"],
+                    correct: 0
+                },
+                {
+                    question: "What is the difference between state and props in React?",
+                    options: ["There is no difference", "State is mutable, props are immutable", "Props are mutable, state is immutable", "State is for functional components, props for class components"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the useMemo hook?",
+                    options: ["To memoize values", "To create refs", "To handle side effects", "To update state"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the useRef hook?",
+                    options: ["To create mutable variables", "To optimize rendering", "To handle state updates", "To create new components"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the React.lazy function?",
+                    options: ["To create lazy-loaded components", "To optimize state updates", "To handle side effects", "To create refs"],
+                    correct: 0
+                }
+            ],
+            'Node.js': [
+                {
+                    question: "Which module is used to create a web server in Node.js?",
+                    options: ["web", "http", "server", "net"],
+                    correct: 1
+                },
+                {
+                    question: "What does the global object 'process' represent in Node.js?",
+                    options: ["Current working directory", "Current module", "Current CPU process", "Current Node.js process"],
+                    correct: 3
+                },
+                {
+                    question: "What is the purpose of the 'module.exports' object in Node.js?",
+                    options: ["To import modules", "To export functionality from a module", "To create new modules", "To delete modules"],
+                    correct: 1
+                },
+                {
+                    question: "Which of the following is not a core module in Node.js?",
+                    options: ["http", "fs", "path", "express"],
+                    correct: 3
+                },
+                {
+                    question: "What is the purpose of the 'npm' command in Node.js?",
+                    options: ["To run Node.js applications", "To debug Node.js applications", "To manage packages for Node.js", "To compile Node.js code"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the 'Buffer' class in Node.js?",
+                    options: ["To handle binary data", "To create web servers", "To manage file systems", "To handle asynchronous operations"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'cluster' module in Node.js?",
+                    options: ["To create child processes", "To manage databases", "To handle file uploads", "To create web sockets"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'EventEmitter' class in Node.js?",
+                    options: ["To emit events", "To handle HTTP requests", "To manage file systems", "To create web servers"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'path' module in Node.js?",
+                    options: ["To handle file paths", "To create web servers", "To manage databases", "To handle asynchronous operations"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the 'util.promisify()' function in Node.js?",
+                    options: ["To convert callback-based functions to promise-based", "To create new promises", "To handle errors in promises", "To chain multiple promises"],
+                    correct: 0
+                }
+            ],
+            'SQL': [
+                {
+                    question: "Which SQL keyword is used to retrieve unique values?",
+                    options: ["DISTINCT", "UNIQUE", "DIFFERENT", "SELECT"],
+                    correct: 0
+                },
+                {
+                    question: "Which SQL clause is used to filter the results of a SELECT statement?",
+                    options: ["FILTER", "HAVING", "WHERE", "GROUP BY"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of the JOIN clause in SQL?",
+                    options: ["To combine rows from two or more tables", "To filter results", "To sort results", "To group results"],
+                    correct: 0
+                },
+                {
+                    question: "Which SQL statement is used to insert new data into a database?",
+                    options: ["ADD", "INSERT", "UPDATE", "CREATE"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of the GROUP BY clause in SQL?",
+                    options: ["To sort results", "To filter results", "To join tables", "To group rows that have the same values"],
+                    correct: 3
+                },
+                {
+                    question: "Which SQL function is used to count the number of rows that match the specified criteria?",
+                    options: ["COUNT()", "SUM()", "AVG()", "MAX()"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of the HAVING clause in SQL?",
+                    options: ["To filter results of aggregate functions", "To join tables", "To sort results", "To group results"],
+                    correct: 0
+                },
+                {
+                    question: "Which SQL statement is used to delete data from a database?",
+                    options: ["REMOVE", "DELETE", "DROP", "CLEAR"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of an index in SQL?",
+                    options: ["To store data", "To improve the speed of data retrieval", "To join tables", "To filter results"],
+                    correct: 1
+                },
+                {
+                    question: "Which SQL statement is used to update existing data in a database?",
+                    options: ["MODIFY", "SAVE", "CHANGE", "UPDATE"],
+                    correct: 3
+                }
+            ],
+            'Git': [
+                {
+                    question: "Which command is used to create a new branch in Git?",
+                    options: ["git branch", "git checkout -b", "git new", "git create"],
+                    correct: 1
+                },
+                {
+                    question: "What does 'git pull' do?",
+                    options: ["Upload local changes", "Download remote changes", "Create a new branch", "Delete a branch"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to stage changes for commit?",
+                    options: ["git stage", "git commit", "git add", "git push"],
+                    correct: 2
+                },
+                {
+                    question: "What is the purpose of .gitignore file?",
+                    options: ["To list all git commands", "To ignore changes in tracked files", "To specify intentionally untracked files to ignore", "To store git configuration"],
+                    correct: 2
+                },
+                {
+                    question: "Which command is used to view the commit history?",
+                    options: ["git history", "git log", "git commit -h", "git branch"],
+                    correct: 1
+                },
+                {
+                    question: "What does 'git clone' do?",
+                    options: ["Create a new repository", "Copy a repository", "Delete a repository", "Rename a repository"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to merge branches?",
+                    options: ["git merge", "git branch -m", "git checkout", "git pull"],
+                    correct: 0
+                },
+                {
+                    question: "What is the purpose of 'git stash'?",
+                    options: ["To permanently delete changes", "To temporarily store changes", "To push changes to remote", "To create a new branch"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to switch between branches?",
+                    options: ["git switch", "git checkout", "git branch", "git move"],
+                    correct: 1
+                },
+                {
+                    question: "What does 'git fetch' do?",
+                    options: ["Download objects and refs from remote", "Upload local changes to remote", "Merge remote changes", "Create a new remote"],
+                    correct: 0
+                }
+            ],
+            'Docker': [
+                {
+                    question: "Which file is used to define the services, networks, and volumes for a Docker application?",
+                    options: ["Dockerfile", "docker-compose.yml", "dockerconfig.json", "docker-services.conf"],
+                    correct: 1
+                },
+                {
+                    question: "What command is used to start a Docker container?",
+                    options: ["docker start", "docker run", "docker begin", "docker launch"],
+                    correct: 1
+                },
+                {
+                    question: "What is a Docker image?",
+                    options: ["A running instance of an application", "A template for creating containers", "A network configuration", "A volume mount point"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to list all running Docker containers?",
+                    options: ["docker list", "docker ps", "docker containers", "docker show"],
+                    correct: 1
+                },
+                {
+                    question: "What is the purpose of a Dockerfile?",
+                    options: ["To configure Docker networks", "To define how to build a Docker image", "To manage Docker volumes", "To orchestrate multiple containers"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to build a Docker image from a Dockerfile?",
+                    options: ["docker create", "docker build", "docker make", "docker compile"],
+                    correct: 1
+                },
+                {
+                    question: "What is Docker Compose used for?",
+                    options: ["To build Docker images", "To run single containers", "To define and run multi-container applications", "To manage Docker networks"],
+                    correct: 2
+                },
+                {
+                    question: "Which command is used to stop a running Docker container?",
+                    options: ["docker end", "docker kill", "docker stop", "docker halt"],
+                    correct: 2
+                },
+                {
+                    question: "What is a Docker volume?",
+                    options: ["A network interface", "A persistent data storage mechanism", "A type of container", "A CPU allocation unit"],
+                    correct: 1
+                },
+                {
+                    question: "Which command is used to remove a Docker image?",
+                    options: ["docker delete image", "docker remove image", "docker image rm", "docker erase"],
+                    correct: 2
+                }
+            ]
+        };
+
+        const resources = {
+            JavaScript: {
+        beginner: {
+            variables: {
+                text: "https://www.codecademy.com/learn/introduction-to-javascript",
+                video: "https://www.youtube.com/watch?v=upDLs1sn7g4"
+            },
+            functions: {
+                text: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+                video: "https://www.youtube.com/watch?v=eis11j_iGMs"
+            },
+            arrays: {
+                text: "https://www.freecodecamp.org/news/array-manipulation-in-javascript/",
+                video: "https://www.youtube.com/watch?v=R8rmfD9Y5-c"
+            }
+        },
+        intermediate: {
+            closures: {
+                text: "https://javascript.info/closure",
+                video: "https://www.youtube.com/watch?v=1JsJx1x35c0"
+            },
+            promises: {
+                text: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+                video: "https://www.youtube.com/watch?v=DHvZLI7Db8E"
+            },
+            ES6: {
+                text: "https://exploringjs.com/es6/",
+                video: "https://www.youtube.com/watch?v=IEf1KAcK6A8"
+            }
+        },
+        advanced: {
+            designPatterns: {
+                text: "https://www.patterns.dev/posts/",
+                video: "https://www.youtube.com/watch?v=8JJ101D3knE"
+            },
+            asyncProgramming: {
+                text: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous",
+                video: "https://www.youtube.com/watch?v=PoRJizFvM7s"
+            },
+            optimization: {
+                text: "https://web.dev/fast/",
+                video: "https://www.youtube.com/watch?v=9zj6xOG8TSY"
+            }
+        }
+    },
+            
+    Python: {
+        beginner: {
+            variables: {
+                text: "https://www.learnpython.org/",
+                video: "https://www.youtube.com/watch?v=ZDa-Z5JzLYM"
+            },
+            functions: {
+                text: "https://realpython.com/defining-your-own-python-function/",
+                video: "https://www.youtube.com/watch?v=NSbOtYzIQI0"
+            },
+            loops: {
+                text: "https://www.w3schools.com/python/python_for_loops.asp",
+                video: "https://www.youtube.com/watch?v=6iF8Xb7Z3wQ"
+            }
+        },
+        intermediate: {
+            OOP: {
+                text: "https://realpython.com/python3-object-oriented-programming/",
+                video: "https://www.youtube.com/watch?v=Ej_02ICOIgs"
+            },
+            modules: {
+                text: "https://realpython.com/python-modules-packages/",
+                video: "https://www.youtube.com/watch?v=1vy8m1eKh8c"
+            },
+            errorHandling: {
+                text: "https://docs.python.org/3/tutorial/errors.html",
+                video: "https://www.youtube.com/watch?v=NIWwJbo-9_8"
+            }
+        },
+        advanced: {
+            asyncProgramming: {
+                text: "https://realpython.com/async-io-python/",
+                video: "https://www.youtube.com/watch?v=tSLDcRkgTsY"
+            },
+            decorators: {
+                text: "https://realpython.com/primer-on-python-decorators/",
+                video: "https://www.youtube.com/watch?v=FsAPt_9Bf3U"
+            },
+            metaprogramming: {
+                text: "https://realpython.com/python-metaclasses/",
+                video: "https://www.youtube.com/watch?v=sPiWg5jSoZI"
+            }
+        }
+    },
+    Java: {
+        beginner: {
+            variables: {
+                text: "https://www.javatpoint.com/java-variables",
+                video: "https://www.youtube.com/watch?v=goiXI5FHV0M"
+            },
+            controlStatements: {
+                text: "https://www.w3schools.com/java/java_conditions.asp",
+                video: "https://www.youtube.com/watch?v=wxds6MAtUQ0"
+            },
+            loops: {
+                text: "https://www.geeksforgeeks.org/loops-in-java/",
+                video: "https://www.youtube.com/watch?v=8cm1x4bC610"
+            }
+        },
+        intermediate: {
+            collections: {
+                text: "https://www.baeldung.com/java-collections",
+                video: "https://www.youtube.com/watch?v=TIUC1FSJ_Sk"
+            },
+            generics: {
+                text: "https://www.javatpoint.com/generics-in-java",
+                video: "https://www.youtube.com/watch?v=wQGSNjOf9p8"
+            },
+            multithreading: {
+                text: "https://www.geeksforgeeks.org/multithreading-in-java/",
+                video: "https://www.youtube.com/watch?v=3e8tOj5f1T8"
+            }
+        },
+        advanced: {
+            streams: {
+                text: "https://www.baeldung.com/java-8-streams",
+                video: "https://www.youtube.com/watch?v=t1-YZ6bF-g0"
+            },
+            designPatterns: {
+                text: "https://refactoring.guru/design-patterns/java",
+                video: "https://www.youtube.com/watch?v=NU_1StN5Tkk"
+            },
+            performanceTuning: {
+                text: "https://www.oracle.com/java/technologies/javase/performance-tuning.html",
+                video: "https://www.youtube.com/watch?v=HjICUmTuEpw"
+            }
+        }
+    },
+
+    Ruby: {
+        beginner: {
+            basics: {
+                text: "https://www.ruby-lang.org/en/documentation/quickstart/",
+                video: "https://www.youtube.com/watch?v=t_ispmWmdjY"
+            }
+        },
+        intermediate: {
+            guides: {
+                text: "https://www.rubyguides.com/",
+                video: "https://www.youtube.com/watch?v=Dji9ALCgfpM"
+            }
+        },
+        advanced: {
+            doctrine: {
+                text: "https://rubyonrails.org/doctrine",
+                video: "https://www.youtube.com/watch?v=fmyvWz5TUWg"
+            }
+        }
+    },
+    Go: {
+        beginner: {
+            basics: {
+                text: "https://tour.golang.org/welcome/1",
+                video: "https://www.youtube.com/watch?v=YS4e4q9oBaU"
+            }
+        },
+        intermediate: {
+            examples: {
+                text: "https://gobyexample.com/",
+                video: "https://www.youtube.com/watch?v=Q0sKAMal4WQ"
+            }
+        },
+        advanced: {
+            effectiveGo: {
+                text: "https://golang.org/doc/effective_go",
+                video: "https://www.youtube.com/watch?v=YEKjSzIwAdA"
+            }
+        }
+    },
+    HTML_CSS: {
+        beginner: {
+            responsiveDesign: {
+                text: "https://www.freecodecamp.org/learn/responsive-web-design/",
+                video: "https://www.youtube.com/watch?v=pQN-pnXPaVg"
+            }
+        },
+        intermediate: {
+            cssDocs: {
+                text: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+                video: "https://www.youtube.com/watch?v=1Rs2ND1ryYc"
+            }
+        },
+        advanced: {
+            cssTricks: {
+                text: "https://css-tricks.com/",
+                video: "https://www.youtube.com/watch?v=Wm6CUkswsNw"
+            }
+        }
+    },
+    React: {
+        beginner: {
+            tutorial: {
+                text: "https://reactjs.org/tutorial/tutorial.html",
+                video: "https://www.youtube.com/watch?v=Ke90Tje7VS0"
+            }
+        },
+        intermediate: {
+            documentation: {
+                text: "https://reactjs.org/docs/getting-started.html",
+                video: "https://www.youtube.com/watch?v=4UZrsTqkcW4"
+            }
+        },
+        advanced: {
+            patterns: {
+                text: "https://reactpatterns.com/",
+                video: "https://www.youtube.com/watch?v=0IkWuXeKPV0"
+            }
+        }
+    },
+    NodeJS: {
+        beginner: {
+            basics: {
+                text: "https://nodejs.dev/learn",
+                video: "https://www.youtube.com/watch?v=TlB_eWDSMt4"
+            }
+        },
+        intermediate: {
+            express: {
+                text: "https://www.npmjs.com/package/express",
+                video: "https://www.youtube.com/watch?v=Oe421EPjeBE"
+            }
+        },
+        advanced: {
+            apiDocs: {
+                text: "https://nodejs.org/api/",
+                video: "https://www.youtube.com/watch?v=fBNz5xF-Kx4"
+            }
+        }
+    },
+    SQL: {
+        beginner: {
+            basics: {
+                text: "https://www.w3schools.com/sql/",
+                video: "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+            }
+        },
+        intermediate: {
+            indexing: {
+                text: "https://use-the-index-luke.com/",
+                video: "https://www.youtube.com/watch?v=7S_tz1z_5bA"
+            }
+        },
+        advanced: {
+            advancedQueries: {
+                text: "https://mode.com/sql-tutorial/",
+                video: "https://www.youtube.com/watch?v=p3qvj9hO_Bo"
+            }
+        }
+    },
+    Git: {
+        beginner: {
+            versionControl: {
+                text: "https://www.atlassian.com/git/tutorials/what-is-version-control",
+                video: "https://www.youtube.com/watch?v=8JJ101D3knE"
+            }
+        },
+        intermediate: {
+            book: {
+                text: "https://git-scm.com/book/en/v2",
+                video: "https://www.youtube.com/watch?v=Uszj_k0DGsg"
+            }
+        },
+        advanced: {
+            branching: {
+                text: "https://learngitbranching.js.org/",
+                video: "https://www.youtube.com/watch?v=CRlGDDprdOQ"
+            }
+        }
+    },
+    Docker: {
+        beginner: {
+            basics: {
+                text: "https://docker-curriculum.com/",
+                video: "https://www.youtube.com/watch?v=fqMOX6JJhGo"
+            }
+        },
+        intermediate: {
+            gettingStarted: {
+                text: "https://docs.docker.com/get-started/",
+                video: "https://www.youtube.com/watch?v=pTFZFxd4hOI"
+            }
+        },
+        advanced: {
+            compose: {
+                text: "https://docs.docker.com/compose/",
+                video: "https://www.youtube.com/watch?v=Qw9zlE3t8Ko"
+            }
+        }
+    }
+    
+    };
+    
+            
+
+        let currentTopic = '';
+        let currentQuestion = 0;
+        let score = 0;
+
+        function renderTopicSelection() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="topic-selection">
+                    <h2>Choose a topic to evaluate:</h2>
+                    <div class="btn-group">
+                        ${topics.map(topic => `<button class="btn" onclick="selectTopic('${topic}')">${topic}</button>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectTopic(topic) {
+            currentTopic = topic;
+            currentQuestion = 0;
+            score = 0;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = quizData[currentTopic][currentQuestion];
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="question">
+                    <h2>${question.question}</h2>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${((currentQuestion + 1) / quizData[currentTopic].length) * 100}%"></div>
+                </div>
+            `;
+        }
+
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[index].classList.add('selected');
+
+            setTimeout(() => {
+                if (index === quizData[currentTopic][currentQuestion].correct) {
+                    score++;
+                }
+                currentQuestion++;
+                if (currentQuestion < quizData[currentTopic].length) {
+                    renderQuestion();
+                } else {
+                    renderResult();
+                }
+            }, 1000);
+        }
+
+        function renderResult() {
+            const percentage = (score / quizData[currentTopic].length) * 100;
+            let level;
+            if (percentage >= 80) {
+                level = 'advanced';
+            } else if (percentage >= 50) {
+                level = 'intermediate';
+            } else {
+                level = 'beginner';
+            }
+
+            const content = document.getElementById('content');
+            content.innerHTML = `
+    <div class="result">
+        <h2>Your Results</h2>
+        <p>Topic: ${currentTopic}</p>
+        <p>Score: ${score}/${quizData[currentTopic].length}</p>
+        <p>Skill Level: ${level}</p>
+        <h3>Recommended Resources:</h3>
+        <div class="resource-links">
+            ${Object.keys(resources[currentTopic][level])
+                .map(
+                    (subcategory) => `
+                    <div class="subcategory">
+                        <h4>${subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}</h4>
+                        <a href="${resources[currentTopic][level][subcategory].text}" target="_blank" class="resource-link">
+                            📚 ${currentTopic} ${level} - ${subcategory} course
+                        </a>
+                        <a href="${resources[currentTopic][level][subcategory].video}" target="_blank" class="resource-link">
+                            🎥 ${currentTopic} ${level} - ${subcategory} video tutorial
+                        </a>
+                    </div>
+                `
+                )
+                .join("")}
+        </div>
+        <button class="btn" onclick="renderTopicSelection()">Try Another Topic</button>
+    </div>
+`;
+
+        }
+
+        renderTopicSelection();
+    </script>
+</body>
+</html>
